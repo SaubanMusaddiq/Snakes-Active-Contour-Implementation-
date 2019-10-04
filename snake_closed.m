@@ -27,5 +27,8 @@ y(I) = fy;
 plot1 = plot([x;x(1)],[y;y(1)],'b');
 
 for ii = 1:iterations
-  [x,y] = plot_next(x,y,P,gamma,plot1,0,0,[],[],x(1),y(1));
+  [x,y] = plot_next(x,y,P,gamma,0,0);
+  pause(0.1);
+  plot1.XData = [x;x(1)];
+  plot1.YData = [y;y(1)];
 end

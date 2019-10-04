@@ -2,7 +2,6 @@ x =(0:0.1:2*pi)' + 2;
 y =20*sin(0:0.1:2*pi)' + 2;
 hold on, plot([x],[y],'g');
 
-
 alpha = 1;
 beta = 0.1;
 gamma = 0.05;
@@ -54,5 +53,8 @@ Pinv = inv(P+ gamma .* eye(N));
 plot1 = plot([x(1);x;x(N)],[y(1);y;y(N)],'b');
 
 for ii = 1:iterations
-  [x,y] = plot_next(x,y,Pinv,gamma,plot1,extFx,extFy,firstX,firstY,lastX,lastY);
+  [x,y] = plot_next(x,y,Pinv,gamma,extFx,extFy);
+  pause(0.1);
+  plot1.XData = [firstX;x;lastX];
+  plot1.YData = [firstY;y;lastY];
 end
