@@ -1,60 +1,56 @@
-x =(0:0.1:2*pi)' + 2;
-y =20*sin(0:0.1:2*pi)' + 2;
-hold on, plot([x],[y],'g');
+x = (0:0.1:2*pi)' + 10;
+y = 10*sin(0:0.1:2*pi)' + 2;
 
-alpha = 1;
-beta = 0.1;
-gamma = 0.05;
-iterations = 100;
+hold on, plot(x,y,'g');
 
+%v = VideoWriter('closed_kink1.avi');
+%open(v);
+%frame = getframe(gcf);
+%writeVideo(v,frame);
+
+alpha = 0.2;
+beta = 0;
+gamma = 0.1;
+iterations =1000;
 
 N = length(x);
+A = a_matrix(N, alpha, beta, 'open');
 
-extFx = zeros(N,1);
-extFy = zeros(N,1);
+P = inv(A+ gamma .* eye(N));
 
-a = (2*alpha+6*beta);
-b = -alpha-4*beta;
-c = beta;
-P = diag(repmat(a,1,N));
-P = P + diag(repmat(b,1,N-1), 1) + diag(   b, -N+1);
-P = P + diag(repmat(b,1,N-1),-1) + diag(   b,  N-1);
-P = P + diag(repmat(c,1,N-2), 2) + diag([c,c],-N+2);
-P = P + diag(repmat(c,1,N-2),-2) + diag([c,c], N-2);
+plot1 = plot(x,y,'b');
 
-P(1,N) = 0;
-P(1,N-1) = 0;
-P(2,N) = 0;
-P(N,1) = 0;
-P(N-1,1) = 0;
-P(N,2) = 0;
-
-P(1,1) = P(1,1) - c;
-P(N,N) = P(N,N) - c;
-
-firstX = x(1);
-firstY = y(1);
-lastX  = x(N);
-lastY  = y(N);
+%set(plot1,'HitTest','off')
+%set(gca,'ButtonDownFcn',@myKeyPressFcn)
+%set(plot1,'ButtonDownFcn','disp(''axis callback'')')
 
 
-extFx(1) = extFx(1) - (2*c + b)* firstX;
-extFx(2) = extFx(2) - (c)* firstX;
-extFx(N-1) = extFx(N-1) -(c)* lastX;
-extFx(N) = extFx(N) - (2*c + b)* lastX;
-
-extFy(1) = extFy(1) - (2*c + b)* firstY;
-extFy(2) = extFy(2) - (c)* firstY;
-extFy(N-1) = extFy(N-1) - (c)* lastY;
-extFy(N) = extFy(N) - (2*c + b)* lastY;
-
-Pinv = inv(P+ gamma .* eye(N));
-
-plot1 = plot([x(1);x;x(N)],[y(1);y;y(N)],'b');
+%frame = getframe(gcf);
+%writeVideo(v,frame);
 
 for ii = 1:iterations
-  [x,y] = plot_next(x,y,Pinv,gamma,extFx,extFy);
-  pause(0.1);
-  plot1.XData = [firstX;x;lastX];
-  plot1.YData = [firstY;y;lastY];
+  [x,y] = plot_next(x,y,P,gamma,0,0);
+  if 0
+    KEY_IS_PRESSED
+    mx = CLICK_X;
+    my = CLICK_Y;
+    %[M,I] = min((x - mx) .^ 2 + (y - my) .^ 2);
+    I = 1
+    x(I) = mx;
+    y(I) = my;
+    KEY_IS_PRESSED = 0;
+  end
+  pause(0.01);
+  plot1.XData = x;
+  plot1.YData = y;
+  %frame = getframe(gcf);
+  %writeVideo(v,frame);
+end
+
+%close(v);
+
+function myKeyPressFcn(hObject, event)
+  CLICK_X = event.IntersectionPoint(1);
+  CLICK_Y = event.IntersectionPoint(2);
+  KEY_IS_PRESSED = 1;
 end
