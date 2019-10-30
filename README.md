@@ -1,8 +1,8 @@
 This is a simple Snake(Active contours) implementation using MATLAB.
 
-To demonstrate an open snake run snake_open.m.
+To run snake(mode,alpha,beta,gamma,iterations) in matlab.
 
-To demonstrate a closed snake run snake_closed.m
+Mode can be  "open" / "closed".
 
 
 References
