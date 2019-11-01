@@ -1,6 +1,8 @@
 This is a simple Snake(Active contours) implementation using MATLAB.
 
-To run snake(mode,alpha,beta,gamma,iterations) in matlab.
+To run snake_fn(mode,alpha,beta,gamma,iterations) in matlab.
+
+snake.mlapp is a matlab app to tweak around with snakes.
 
 Mode can be  "open" / "closed".
 

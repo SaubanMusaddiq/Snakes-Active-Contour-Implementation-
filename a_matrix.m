@@ -15,7 +15,7 @@ function A = a_matrix(N, alpha, beta, mode)
   A_beta = A_beta + diag(repmat(c,1,N-2),-2) + diag([c,c], N-2);
 
 
-  if mode == "open"
+  if mode == "Open"
     A_alpha(1,1) = 1;
     A_alpha(N,N) = 1;
     A_alpha(1,N) = 0;

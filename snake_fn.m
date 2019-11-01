@@ -6,7 +6,8 @@ function  snake(mode,alpha,beta,gamma,iterations)
   global CLICK_Y
   CLICK_Y = 0;
 
-  [x,y] = generate_data(mode);
+  N = 63;
+  [x,y] = generate_data(mode,N);
 
   %v = VideoWriter('closed_kink1.avi');
   %open(v);
@@ -18,18 +19,17 @@ function  snake(mode,alpha,beta,gamma,iterations)
   %gamma = 0.5;
   %iterations = 1000;
 
-  N = length(x);
   A = a_matrix(N, alpha, beta, mode);
   P = inv(A+ gamma .* eye(N));
 
-  if mode == "open"
+  if mode == "Open"
     plot1 = plot([x],[y],'b');
   else
     plot1 = plot([x;x(1)],[y;y(1)],'b');
   end
   set(plot1,'HitTest','off')
   set(gca,'ButtonDownFcn',@myKeyPressFcn)
-  set(plot1,'ButtonDownFcn','disp(''axis callback'')')
+  % set(plot1,'ButtonDownFcn','disp(''axis callback'')')
 
   %frame = getframe(gcf);
   %writeVideo(v,frame);
@@ -45,9 +45,9 @@ function  snake(mode,alpha,beta,gamma,iterations)
       y(I) = my;
       KEY_IS_PRESSED = 0;
     end
-    [x,y] = plot_next(x,y,P,gamma,extFx,extFy);
+    [x,y] = update_position(x,y,P,gamma,extFx,extFy);
     pause(0.1);
-    if mode == "open"
+    if mode == "Open"
       plot1.XData = [x];
       plot1.YData = [y];
     else
