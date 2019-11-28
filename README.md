@@ -1,12 +1,4 @@
-This is a simple Snake(Active contours) implementation using MATLAB.
+# Snakes
+Open and closed snakes implementation for CSE 591
 
-To run snake_fn(mode,alpha,beta,gamma,iterations) in matlab.
-
-snake.mlapp is a matlab app to tweak around with snakes.
-
-Mode can be  "open" / "closed".
-
-
-References
-[1] Kass, M., Witkin, A., Terzopoulos, D., 1988. Snakes: active contour models. International Journal of Computer Vision 1 (4), 321–331.
-[2] Jianming Liang, Tim McInerney, Demetri Terzopoulos. United Snakes. 2006
+The result of the open snake, when applied to special_gaussian, is attached as openSnakeResult.png and result for closed snake applied on the same image is attached as closedSnakeResult.png
